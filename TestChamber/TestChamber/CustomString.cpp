@@ -184,3 +184,21 @@ char* CustomString::GetFromIndex(int index)
 {
 	return Begin() + index;
 }
+
+void CustomString::Rename(const char* replacement)
+{
+
+}
+
+void CustomString::ToUpper()
+{
+	int itr = 0;
+	while (Data[itr]) 
+	{
+		if (isalpha(Data[itr])) 
+		{
+			Data[itr] = Data[itr] &~ 32;
+		}
+		++itr;
+	}
+}

@@ -18,6 +18,8 @@ public:
 	bool IsEmpty();
 	void PrintHelper();
 	char* GetFromIndex(int index);
+	void Rename(const char* replacement);
+	void ToUpper();
 
 
 private:

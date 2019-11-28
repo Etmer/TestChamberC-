@@ -6,12 +6,15 @@
 
 int main()
 {
-	CustomString* cs = new CustomString("Ich_bin_ein_Satz");
+	CustomString* cs = new CustomString("Ich bin ein Satz");
+	cs->ToUpper();
+	cs->Print();
+	/*
 	std::cout << cs->Split(cs,'_') << std::endl;
 	while (cs->Split(nullptr, '_') != nullptr)
 	{
 		cs->PrintHelper();
-	}
+	}*/
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
