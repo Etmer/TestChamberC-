@@ -6,9 +6,12 @@
 
 int main()
 {
-	CustomString* cs = new CustomString("Ich bin ein Satz");
-	cs->ToUpper();
-	cs->Print();
+	CustomString cs("Ich bin ein Satz");
+	CustomString cs2(", mit Komma");
+	CustomString cs3 = cs + cs2;
+
+	cs3.Print();
+
 	/*
 	std::cout << cs->Split(cs,'_') << std::endl;
 	while (cs->Split(nullptr, '_') != nullptr)

@@ -20,12 +20,16 @@ public:
 	char* GetFromIndex(int index);
 	void Rename(const char* replacement);
 	void ToUpper();
-
+	void ToLower();
+	void Capitalize(); 
+	size_t GetSize();
+	CustomString operator + (CustomString const& obj);
 
 private:
+	char TryGetIndex(int index);
 	int HelperPtrDistance;
-	char* HelperPtr;
-	char* Data;
+	char* HelperPtr; 
+	const char* Data;
 	size_t Size;
 	int Length;
 	void Fill(int begin, int length, const char* input);

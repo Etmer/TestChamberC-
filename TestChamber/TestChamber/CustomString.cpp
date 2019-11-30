@@ -64,8 +64,16 @@ void CustomString::ReplaceRange(int begin, const char* replacement)
 }
 
 char CustomString::GetIndexAt(int index)
-{
-	return 0;
+{  
+	try 
+	{
+		TryGetIndex(index);
+	}
+	catch (const char* msg) 
+	{
+		std::cout << msg << std::endl;
+	}
+	return Data[index];
 }
 
 char* CustomString::Split(CustomString* str, char seperator)
@@ -202,3 +210,61 @@ void CustomString::ToUpper()
 		++itr;
 	}
 }
+
+void CustomString::ToLower()
+{
+	int itr = 0;
+	while (Data[itr])
+	{
+		if (isalpha(Data[itr]))
+		{
+			Data[itr] = Data[itr] | 32;
+		}
+		++itr;
+	}
+}
+
+void CustomString::Capitalize()
+{
+	if (Length > 0) 
+	{
+		Data[0] = Data[0] & ~32;
+	}
+}
+
+size_t CustomString::GetSize()
+{
+	return Size;
+}
+
+CustomString CustomString::operator+(CustomString const& obj)
+{ 
+	size_t bufferSize = (Length + obj.Length) + 1;
+	char* buffer = new char[bufferSize];
+
+	int index = 0;
+	for (int i = 0; i < Length;++i) 
+	{
+		buffer[index] = Data[i];
+		++index;
+	}
+	
+	for (int i = 0; i < obj.Length; ++i)
+	{
+		buffer[index] = obj.Data[i];
+		++index;
+	}
+	buffer[bufferSize -1] = '\0';
+
+	return CustomString(buffer);
+}
+
+char CustomString::TryGetIndex(int index)
+{
+	if (index >= Length) 
+	{
+		throw "Index out of bounds Exception";
+	}
+	return Data[index];
+}
+
