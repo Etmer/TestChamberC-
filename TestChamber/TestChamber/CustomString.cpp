@@ -11,11 +11,23 @@ CustomString::CustomString()
 {
 }
 
+CustomString::CustomString(CustomString& input)
+{
+	Length = GetLengthOfArray(input.Data);
+	size_t buffer = 10;
+	Size = Length + 1;
+	Data = new char[buffer + Size];
+	Fill(0, Length, input.Data);
+	Data[Size - 1] = '\0';
+	HelperPtr = Begin();
+}
+
 CustomString::CustomString(const char* input)
 {
 	Length = GetLengthOfArray(input);
-	Size = Length + 1;
-	Data = new char[Size * 2];
+	size_t buffer = 10;
+	Size =  Length + 1;
+	Data = new char[buffer + Size];
 	Fill(0, Length, input);
 	Data[Size - 1] = '\0';
 	HelperPtr = Begin();
@@ -32,6 +44,20 @@ void CustomString::Insert(int index, const char* input)
 	int dataLength = GetLengthOfArray(Data);
 	int beginningPoint = dataLength + inputLength;
 
+	if (inputLength >= Length)
+	{
+		size_t tempSize = (Length + inputLength) * 2;
+		char* c = new char[tempSize + 1];
+		int itr = 0;
+		while (Data[itr] != '\0')
+		{
+			c[itr] = Data[itr];
+			++itr;
+		}
+		delete Data;
+		Data = c;
+
+	}
 	for (int i = beginningPoint - 1; i > index; --i)
 	{
 		char replacementChar = Data[i - inputLength];
@@ -50,9 +76,18 @@ void CustomString::Replace(int index, char replacement)
 void CustomString::ReplaceRange(int begin, const char* replacement)
 {
 	int inputLength = GetLengthOfArray(replacement);
-	if (Length + inputLength > Size)
+	if (begin + inputLength > Size)
 	{
-
+		size_t tempSize = (begin + inputLength) * 2;
+		char* c = new char[tempSize + 1];
+		int itr = 0;
+		while (Data[itr] != '\0')
+		{
+			c[itr] = Data[itr];
+			++itr;
+		}
+		delete Data;
+		Data = c;
 	}
 	int itr = 0;
 
@@ -61,6 +96,9 @@ void CustomString::ReplaceRange(int begin, const char* replacement)
 		Data[i] = replacement[itr];
 		++itr;
 	}
+
+	int endIndex = begin + inputLength;
+	Data[endIndex] = '\0';
 }
 
 char CustomString::GetIndexAt(int index)
@@ -141,8 +179,12 @@ void CustomString::Print()
 {
 	std::cout << Data << std::endl;
 }
+char &CustomString::operator [](int index)
+{
+	return Data[index];
+}
 
-int CustomString::FindCharacterInString(char character)
+int CustomString::FindAmountOfCharactersInString(char character)
 {
 	int itr = 0;
 	int amount = 0;
@@ -243,12 +285,12 @@ CustomString CustomString::operator+(CustomString const& obj)
 	char* buffer = new char[bufferSize];
 
 	int index = 0;
-	for (int i = 0; i < Length;++i) 
+	for (int i = 0; i < Length;++i)
 	{
 		buffer[index] = Data[i];
 		++index;
 	}
-	
+
 	for (int i = 0; i < obj.Length; ++i)
 	{
 		buffer[index] = obj.Data[i];
@@ -256,7 +298,25 @@ CustomString CustomString::operator+(CustomString const& obj)
 	}
 	buffer[bufferSize -1] = '\0';
 
-	return CustomString(buffer);
+	CustomString c(buffer);
+
+	delete[]buffer;
+
+	return c;
+}
+
+CustomString* CustomString::Copy()
+{
+	return new CustomString(Data);
+}
+
+bool CustomString::FindIndex(int index)
+{
+	if (index >= Length)
+	{
+		throw "Index out of bounds Exception";
+	}
+	return true;
 }
 
 char CustomString::TryGetIndex(int index)

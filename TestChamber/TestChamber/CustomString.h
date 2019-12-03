@@ -3,6 +3,7 @@ class CustomString
 {
 public:
 	CustomString();
+	CustomString(CustomString& input);
 	CustomString(const char* input);
 	~CustomString();
 	void Insert(int index, const char* input);
@@ -14,7 +15,8 @@ public:
 	char* End();
 	char* Begin();
 	void Print();
-	int FindCharacterInString(char character);
+	char& operator[](int index);
+	int FindAmountOfCharactersInString(char character);
 	bool IsEmpty();
 	void PrintHelper();
 	char* GetFromIndex(int index);
@@ -24,12 +26,14 @@ public:
 	void Capitalize(); 
 	size_t GetSize();
 	CustomString operator + (CustomString const& obj);
+	CustomString* Copy();
 
 private:
+	bool FindIndex(int index);
 	char TryGetIndex(int index);
 	int HelperPtrDistance;
 	char* HelperPtr; 
-	const char* Data;
+	char* Data;
 	size_t Size;
 	int Length;
 	void Fill(int begin, int length, const char* input);

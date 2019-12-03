@@ -6,11 +6,13 @@
 
 int main()
 {
-	CustomString cs("Ich bin ein Satz");
-	CustomString cs2(", mit Komma");
-	CustomString cs3 = cs + cs2;
+	CustomString cs1("Ic");
+	CustomString* cs2 = cs1.Copy();
+	CustomString* csPtr = new CustomString(cs1); //Hä?
 
-	cs3.Print();
+	cs1.Print();
+	cs2->Print();
+	csPtr->Print();
 
 	/*
 	std::cout << cs->Split(cs,'_') << std::endl;
