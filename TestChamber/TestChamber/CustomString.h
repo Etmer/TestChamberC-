@@ -3,7 +3,7 @@ class CustomString
 {
 public:
 	CustomString();
-	CustomString(CustomString& input);
+	CustomString(CustomString const& input);
 	CustomString(const char* input);
 	~CustomString();
 	void Insert(int index, const char* input);
@@ -20,22 +20,22 @@ public:
 	bool IsEmpty();
 	void PrintHelper();
 	char* GetFromIndex(int index);
-	void Rename(const char* replacement);
+	void Rename(char const& replacement);
 	void ToUpper();
 	void ToLower();
 	void Capitalize(); 
 	size_t GetSize();
 	CustomString operator + (CustomString const& obj);
 	CustomString* Copy();
+	char TryGetIndex(int index);
 
 private:
 	bool FindIndex(int index);
-	char TryGetIndex(int index);
-	int HelperPtrDistance;
-	char* HelperPtr; 
-	char* Data;
-	size_t Size;
-	int Length;
+	int HelperPtrIndex = 0;
+	char* HelperPtr = nullptr;
+	char* Data = nullptr;
+	int Length = 0;
+	size_t Size = 0;
 	void Fill(int begin, int length, const char* input);
 	int GetLengthOfArray(const char* input);
 

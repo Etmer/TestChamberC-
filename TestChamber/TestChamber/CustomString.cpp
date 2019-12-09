@@ -1,17 +1,17 @@
 #include "CustomString.h"
 #include <iostream>
 
-int HelperPtrIndex = 0;
-char* HelperPtr = nullptr;
-char* Data = nullptr;
-int Length = 0;
-size_t Size = 0;
-
 CustomString::CustomString()
 {
+	Length = 0;
+	size_t buffer = 10;
+	Size = Length + 1;
+	Data = new char[buffer + Size];
+	Data[0] = '\0';
+	HelperPtr = Begin();
 }
 
-CustomString::CustomString(CustomString& input)
+CustomString::CustomString(CustomString const& input)
 {
 	Length = GetLengthOfArray(input.Data);
 	size_t buffer = 10;
@@ -36,6 +36,7 @@ CustomString::CustomString(const char* input)
 
 CustomString::~CustomString()
 {
+	delete[] Data;
 }
 
 void CustomString::Insert(int index, const char* input)
@@ -54,8 +55,8 @@ void CustomString::Insert(int index, const char* input)
 			c[itr] = Data[itr];
 			++itr;
 		}
-		delete Data;
-		Data = c;
+		delete[] Data;
+		Data = c; 
 
 	}
 	for (int i = beginningPoint - 1; i > index; --i)
@@ -86,7 +87,7 @@ void CustomString::ReplaceRange(int begin, const char* replacement)
 			c[itr] = Data[itr];
 			++itr;
 		}
-		delete Data;
+		delete[] Data;
 		Data = c;
 	}
 	int itr = 0;
@@ -102,14 +103,10 @@ void CustomString::ReplaceRange(int begin, const char* replacement)
 }
 
 char CustomString::GetIndexAt(int index)
-{  
-	try 
+{
+	if (index >= Length)
 	{
-		TryGetIndex(index);
-	}
-	catch (const char* msg) 
-	{
-		std::cout << msg << std::endl;
+		throw "Index out of bounds Exception";
 	}
 	return Data[index];
 }
@@ -158,7 +155,7 @@ char* CustomString::Split(CustomString* str, char seperator)
 
 void CustomString::Clear()
 {
-	delete Data;
+	delete[] Data;
 	Data = new char[1];
 	Length = 0;
 	Size = Length + 1;
@@ -235,9 +232,11 @@ char* CustomString::GetFromIndex(int index)
 	return Begin() + index;
 }
 
-void CustomString::Rename(const char* replacement)
-{
 
+void CustomString::Rename(char const& replacement)
+{
+	size_t tempSize = sizeof(replacement);
+	int i = 0;
 }
 
 void CustomString::ToUpper()
@@ -321,9 +320,14 @@ bool CustomString::FindIndex(int index)
 
 char CustomString::TryGetIndex(int index)
 {
-	if (index >= Length) 
+	try 
 	{
-		throw "Index out of bounds Exception";
+		GetIndexAt(index);
+	}
+	catch (const char* msg) 
+	{
+		std::cerr << msg << std::endl;
+		return Data[0];
 	}
 	return Data[index];
 }

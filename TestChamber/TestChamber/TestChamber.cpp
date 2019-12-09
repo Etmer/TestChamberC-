@@ -6,12 +6,19 @@
 
 int main()
 {
+	CustomString* none = new CustomString();
 	CustomString cs1("Ic");
 	CustomString* cs2 = cs1.Copy();
-	CustomString* csPtr = new CustomString(cs1); //Hä?
+	CustomString& csRef = *cs2;
+	CustomString* csPtr = new CustomString(csRef); //Hä?
+	
+	const char putty[10] = "hello";
+	const char& refref = *putty;
+	none->Rename();
 
 	cs1.Print();
 	cs2->Print();
+	csRef.Print();
 	csPtr->Print();
 
 	/*
