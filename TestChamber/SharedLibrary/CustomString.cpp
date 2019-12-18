@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "CustomString.h"
 #include <iostream>
 
@@ -56,7 +58,7 @@ void CustomString::Insert(int index, const char* input)
 			++itr;
 		}
 		delete[] Data;
-		Data = c; 
+		Data = c;
 
 	}
 	for (int i = beginningPoint - 1; i > index; --i)
@@ -128,7 +130,7 @@ char* CustomString::Split(CustomString* str, char seperator)
 			++itr;
 		}
 	}
-	else 
+	else
 	{
 
 		HelperPtr = Begin() + HelperPtrIndex;
@@ -144,7 +146,7 @@ char* CustomString::Split(CustomString* str, char seperator)
 			++itr;
 		}
 		HelperPtrIndex = HelperPtrIndex + itr;
-		if (HelperPtr != End()) 
+		if (HelperPtr != End())
 		{
 			HelperPtrIndex = HelperPtrIndex + 1;
 			return HelperPtr;
@@ -242,9 +244,9 @@ void CustomString::Rename(char const& replacement)
 void CustomString::ToUpper()
 {
 	int itr = 0;
-	while (Data[itr]) 
+	while (Data[itr])
 	{
-		if (isalpha(Data[itr])) 
+		if (isalpha(Data[itr]))
 		{
 			Data[itr] = Data[itr] &~ 32;
 		}
@@ -267,7 +269,7 @@ void CustomString::ToLower()
 
 void CustomString::Capitalize()
 {
-	if (Length > 0) 
+	if (Length > 0)
 	{
 		Data[0] = Data[0] & ~32;
 	}
@@ -279,7 +281,7 @@ size_t CustomString::GetSize()
 }
 
 CustomString CustomString::operator+(CustomString const& obj)
-{ 
+{
 	size_t bufferSize = (Length + obj.Length) + 1;
 	char* buffer = new char[bufferSize];
 
@@ -320,11 +322,11 @@ bool CustomString::FindIndex(int index)
 
 char CustomString::TryGetIndex(int index)
 {
-	try 
+	try
 	{
 		GetIndexAt(index);
 	}
-	catch (const char* msg) 
+	catch (const char* msg)
 	{
 		std::cerr << msg << std::endl;
 		return Data[0];
