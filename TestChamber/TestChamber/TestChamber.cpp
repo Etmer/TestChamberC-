@@ -6,27 +6,13 @@
 
 int main()
 {
-	CustomString* none = new CustomString();
-	CustomString cs1("Ic");
-	CustomString* cs2 = cs1.Copy();
-	CustomString& csRef = *cs2;
-	CustomString* csPtr = new CustomString(csRef); //Hä?
+	auto myString = CustomString("0123456789");
+	myString.ToUpper();
 
-	const char putty[10] = "hello";
-	const char& refref = *putty;
-	//none->Rename();
+	myString = CustomString("Hallo");
 
-	cs1.Print();
-	cs2->Print();
-	csRef.Print();
-	csPtr->Print();
-
-	/*
-	std::cout << cs->Split(cs,'_') << std::endl;
-	while (cs->Split(nullptr, '_') != nullptr)
-	{
-		cs->PrintHelper();
-	}*/
+	myString.Print();
+	std::cin.get();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

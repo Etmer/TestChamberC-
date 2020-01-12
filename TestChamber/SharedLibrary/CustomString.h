@@ -26,6 +26,7 @@ public:
 	void Capitalize(); 
 	size_t GetSize();
 	CustomString operator + (CustomString const& obj);
+	CustomString operator=(CustomString const& obj);
 	CustomString* Copy();
 	char TryGetIndex(int index);
 

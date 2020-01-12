@@ -6,11 +6,7 @@
 CustomString::CustomString()
 {
 	Length = 0;
-	size_t buffer = 10;
-	Size = Length + 1;
-	Data = new char[buffer + Size];
-	Data[0] = '\0';
-	HelperPtr = Begin();
+	Size = Length;
 }
 
 CustomString::CustomString(CustomString const& input)
@@ -153,24 +149,33 @@ char* CustomString::Split(CustomString* str, char seperator)
 		}
 		return nullptr;
 	}
+	return nullptr;
 }
 
 void CustomString::Clear()
 {
 	delete[] Data;
-	Data = new char[1];
 	Length = 0;
-	Size = Length + 1;
-	Data[Size - 1] = '\0';
+	Size = 0;
+	HelperPtr = nullptr;
+	Data = nullptr;
 }
 
 char* CustomString::End()
 {
+	if (Length == 0)
+	{
+		return nullptr;
+	}
 	return Data + Size;
 }
 
 char* CustomString::Begin()
 {
+	if (Length == 0) 
+	{
+		return nullptr;
+	}
 	return Data;
 }
 
@@ -304,6 +309,21 @@ CustomString CustomString::operator+(CustomString const& obj)
 	delete[]buffer;
 
 	return c;
+}
+CustomString CustomString::operator=(CustomString const& obj)
+{
+	if (Begin() != nullptr)
+	{
+		Clear();
+	}	
+	Length = GetLengthOfArray(obj.Data);
+	size_t buffer = 10;
+	Size = Length + 1;
+	Data = new char[buffer + Size];
+	Fill(0, Length, obj.Data);
+	Data[Size - 1] = '\0';
+	HelperPtr = Begin();
+	return *this;
 }
 
 CustomString* CustomString::Copy()
